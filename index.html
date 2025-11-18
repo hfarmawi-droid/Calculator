@@ -11,6 +11,37 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+
+/* About page layout – two columns, no card box */
+.about-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.about-text {
+  flex: 1.2;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.about-text h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.7rem;
+}
+
+.about-photo {
+  flex: 1;
+  max-width: 350px;
+  object-fit: cover;
+  border-radius: 0;     /* ← No rounded corners */
+  margin-top: 3.5rem;   /* ← Push image down so it aligns with paragraph, not heading */
+}
+
     * { box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
@@ -311,7 +342,7 @@
       color: #1d4ed8;
       font-size: 0.78rem;
       font-weight: 600;
-      margin-top: 0.2rem;
+      margin-top: 1.6rem;
     }
 
     @media (max-width: 900px) {
@@ -331,7 +362,7 @@
   <section class="hero hero-animated" id="hero">
     <div class="hero-inner" id="hero-inner">
       <h1 class="hero-title">Investing made easy.</h1>
-      <p class="hero-subtitle">Build wealth with clarity.</p>
+      <p class="hero-subtitle">Your future starts here</p>
     </div>
   </section>
 
@@ -452,41 +483,51 @@
     </section>
 
     <!-- ABOUT PAGE -->
-    <section id="page-about" class="page">
-      <div class="card about">
-        <h2>Hadi Farmawi</h2>
+<section id="page-about" class="page">
+  <div class="about-container">
 
-<p>
-  Hadi Farmawi is a junior accountancy student at Arizona State University. 
-  He is building his professional brand in corporate accounting with a strong focus on finance.
-</p>
+    <div class="about-text">
+      <h2>Hadi Farmawi</h2>
 
-<p>
-  Hadi's interest in business began in high school when he completed Business Management and Intro 
-  to Entrepreneurship. Before attending ASU, he earned an Associate’s Degree in General Business at 
-  Mesa Community College (2024). Between 2023 and 2024, he served as an office member for Arizona 
-  Cultural Academy where he handled tuition receivables, basic journal entries, and T-accounts.
-</p>
+      <p>
+        Hadi Farmawi is a junior accountancy student at Arizona State University. 
+        He is building his professional brand in corporate accounting with a strong focus on finance.
+      </p>
 
-<p>
-  Hadi's passion for finance and accounting is evident in his projects. He is currently managing a 
-  $125K portfolio for a close relative and applying his studies to manage risk and return. He is also 
-  redesigning a compound-interest calculator incorporating goal-seek analysis and the Fisher equation. 
-  To accomplish these projects, Hadi relies on independent research and applies concepts and frameworks 
-  from External Reporting I, Data Analytics, and Fundamentals of Finance.
-</p>
+      <p>
+        Hadi's interest in business began in high school when he completed Business 
+        Management and Intro to Entrepreneurship. Before attending ASU, he earned an 
+        Associate’s Degree in General Business at Mesa Community College (2024). 
+        Between 2023 and 2024, he served as an office member for Arizona Cultural Academy where he 
+        handled tuition receivables, basic journal entries, and T-accounts.
+      </p>
 
-<p>
-  At ASU, Hadi completed a major research group project in ACC 340, where he contributed to researching 
-  Deckers Brands’ economic moat, key risks, management, and profitability metrics (ROIC/ROA). Outside 
-  of his curriculum, Hadi enjoys cooking, video editing, and exercising—interests that strengthen 
-  discipline, attention to detail, and storytelling that he also brings to his financial work.
-</p>
+      <p>
+        Hadi's passion for finance and accounting is evident in his projects. He is currently managing 
+        a $125K portfolio for a close relative and applying his studies to manage risk and return. 
+        He is also redesigning a compound–interest calculator incorporating goal–seek analysis and the 
+        Fisher equation. To accomplish these projects, Hadi relies on independent research and applies 
+        concepts and frameworks from External Reporting I, Data Analytics, and Fundamentals of Finance.
+      </p>
 
-<p>
-  After graduation, Hadi plans to begin a career in corporate accounting, with a long-term interest in 
-  investment banking.
-</p>
+      <p>
+        At ASU, Hadi completed a major research group project in ACC 340, where he contributed 
+        to researching Deckers Brands’ economic moat, key risks, management, and profitability metrics (ROIC/ROA). 
+        Outside of his curriculum, Hadi enjoys cooking, video editing, and exercising—interests that 
+        strengthen discipline, attention to detail, and storytelling that he also brings to his financial work.
+      </p>
+
+      <p>
+        After graduation, Hadi plans to begin a career in corporate accounting, with a long-term 
+        interest in investment banking.
+      </p>
+    </div>
+
+    <img src="hadi.jpg" class="about-photo" alt="Hadi Farmawi">
+
+  </div>
+</section>
+
 
       </div>
     </section>
