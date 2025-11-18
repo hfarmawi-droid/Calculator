@@ -299,9 +299,24 @@
     /* Chart container */
 
     .chart-header {
-      margin-top: 0;
-      margin-bottom: 0.35rem;
-    }
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.chart-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 0.15rem;
+}
+
+.chart-balance {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1CA46C; /* same green family as your line */
+}
+
 
 .chart-wrapper {
   margin-top: 0.5rem;
@@ -415,13 +430,16 @@
 
             <!-- Right: Chart -->
             <div class="fv-chart-column">
-              <h2 class="chart-header">Growth Over Time</h2>
-              <p class="muted">Nominal vs inflation-adjusted value at the end of each year.</p>
-              <div class="chart-wrapper">
-                <div class="chart-area">
-                  <canvas id="growthChart"></canvas>
-                </div>
-              </div>
+              <div class="chart-header">
+  <div class="chart-label">Your ending balance</div>
+  <div class="chart-balance" id="chart-balance">$0.00</div>
+</div>
+
+<div class="chart-wrapper">
+  <div class="chart-area">
+    <canvas id="growthChart"></canvas>
+  </div>
+</div>
             </div>
           </div>
         </div>
@@ -628,6 +646,11 @@
       fvContribEl.textContent = formatCurrency(res.totalPrincipalNom);
       fvInterestEl.textContent = formatCurrency(res.totalInterestNom);
       fvRealEl.textContent = formatCurrency(res.totalBalanceReal);
+const chartBalanceEl = document.getElementById("chart-balance");
+if (chartBalanceEl) {
+  chartBalanceEl.textContent = formatCurrency(res.totalBalanceReal);
+}
+
 
       chartLabels = [];
       const nominalSeries = [];
