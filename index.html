@@ -11,388 +11,342 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+  .fv-results-card,
+  .fv-results-card h2 {
+    font-family: Cambria, "Times New Roman", serif;
+  }
 
-/* About page layout – two columns, no card box */
-.about-container {
-  display: flex;
-  align-items: flex-start;
-  gap: 2.5rem;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 0;
-}
+  /* About page layout – two columns, no card box */
+  .about-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
 
-.about-text {
-  flex: 1.2;
-  font-size: 1rem;
-  line-height: 1.55;
-}
+  .about-text {
+    flex: 1.2;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
 
-.about-text h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.7rem;
-}
+  .about-text h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.7rem;
+  }
 
-.about-photo {
-  flex: 1;
-  max-width: 350px;
-  object-fit: cover;
-  border-radius: 0;     /* ← No rounded corners */
-  margin-top: 3.5rem;   /* ← Push image down so it aligns with paragraph, not heading */
-}
+  .about-photo {
+    flex: 1;
+    max-width: 350px;
+    object-fit: cover;
+    border-radius: 0;
+    margin-top: 3.5rem;
+  }
 
-    * { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-    body {
-      margin: 0;
-      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f7;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+  body {
+    margin: 0;
+    font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f5f7;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-    /* HERO OVERLAY (FV ONLY) */
+  /* HEADER + TABS */
 
-    .hero {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 5;
-    }
+  .app-header {
+    background: #f5f5f7;
+    border-bottom: 0px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+  }
 
-    .hero.hidden { display: none; }
+  .header-divider {
+    max-width: 0;
+    margin: 0.7rem auto 0.2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
 
-    .hero-inner {
-      text-align: center;
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
+  .tabs-bar {
+    max-width: 1160px;
+    margin: 0.25rem auto 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
 
-    .hero-title {
-      font-size: clamp(2.4rem, 4vw, 3.1rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin: 0;
-    }
+  .tab {
+    border: none;
+    background: transparent;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #6b7280;
+    cursor: pointer;
+    position: relative;
+    font-family: inherit;
+  }
 
-    .hero-subtitle {
-      margin: 0.75rem 0 0;
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      color: #6b7280;
-      font-weight: 400;
-    }
+  .tab::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: transparent;
+    transform-origin: center;
+    transform: scaleX(0.2);
+    transition: background 150ms ease, transform 150ms ease;
+  }
 
-    .hero-animated .hero-title,
-    .hero-animated .hero-subtitle {
-      opacity: 0;
-      transform: translateY(12px);
-      animation: heroFadeUp 900ms ease-out forwards;
-    }
+  .tab.active {
+    color: #111827;
+    font-weight: 500;
+  }
 
-    .hero-animated .hero-subtitle { animation-delay: 200ms; }
+  main {
+    flex: 1;
+    padding: 0.75rem 1rem 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
 
-    @keyframes heroFadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  .page {
+    width: 100%;
+    max-width: 1160px;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
 
-    /* APPLE-LIKE HEADER + TABS */
+  .page.active {
+    display: flex;
+    opacity: 1;
+  }
 
-    .app-header {
-      background: #f5f5f7;
-      border-bottom: 1px solid #e5e7eb;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-    }
+  /* FV content (Home) */
 
-    .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0.9rem 1.5rem 0.3rem;
-      text-align: center;
-    }
+  .fv-content {
+    margin-top: 2.5rem;
+    opacity: 1;
+    transform: none;
+  }
 
-    .header-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
+  /* CARDS AND GRID */
 
-    .header-divider {
-      max-width: 960px;
-      margin: 0.7rem auto 0.2rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
+  .card {
+    background: #ffffff;
+    border-radius: 0px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
+  }
 
-    .tabs-bar {
-      max-width: 960px;
-      margin: 0.25rem auto 0.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
+  .fv-main-card {
+    padding: 1.4rem 1.6rem 1.4rem;
+    margin-bottom: 2rem;
+  }
 
-    .tab {
-      border: none;
-      background: transparent;
-      padding: 0.4rem 0;
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: #6b7280;
-      cursor: pointer;
-      position: relative;
-      font-family: inherit;
-    }
+  .fv-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr);
+    gap: 1.75rem;
+    align-items: stretch;
+  }
 
-    .tab::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 2px;
-      background: transparent;
-      transform-origin: center;
-      transform: scaleX(0.2);
-      transition: background 150ms ease, transform 150ms ease;
-    }
+  .fv-inputs-column,
+  .fv-chart-column {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .tab.active {
-      color: #111827;
-      font-weight: 500;
-    }
+  .fv-results-card {
+    margin-top: 1rem;
+  }
 
-    .tab.active::after {
-      background: #111827;
-      transform: scaleX(1);
-    }
+  .fv-results-card h2 {
+    text-align: center;
+  }
 
-    main {
-      flex: 1;
-      padding: 0.75rem 1rem 2.5rem;
-      display: flex;
-      justify-content: center;
-    }
+  .fv-inputs-column h2,
+  .fv-chart-column h2 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+  }
 
-    .page {
-      width: 100%;
-      max-width: 960px;
-      display: none;
-      flex-direction: column;
-      gap: 1rem;
-      opacity: 0;
-      transition: opacity 220ms ease;
-    }
+  .tagline {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0 0 0.6rem;
+  }
 
-    .page.active {
-      display: flex;
-      opacity: 1;
-    }
+  label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
 
-    /* FV content container that fades in as you scroll */
+  /* underline-only inputs */
+  input,
+  select {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.4rem 0 0.3rem;
+    border: none;
+    border-bottom: 1px solid #d1d5db;
+    border-radius: 0;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    background: transparent;
+    transition: border-bottom-color 120ms ease, background-color 120ms ease;
+  }
 
-    .fv-content {
-      margin-top: 70vh;          /* start off-screen below hero */
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 200ms ease, transform 200ms ease;
-    }
+  input:focus,
+  select:focus {
+    border-bottom-color: #111827;
+    box-shadow: none;
+    background: transparent;
+  }
 
-    /* CARDS AND GRID */
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] { -moz-appearance: textfield; }
 
-    .card {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
-      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-    }
+  .results p {
+    margin: 0.2rem 0;
+    font-size: 0.93rem;
+  }
 
-    .fv-main-card {
-      padding: 1.4rem 1.6rem 1.4rem;
-    }
+  .results strong { font-weight: 600; }
 
+  .muted {
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Chart container */
+
+  .chart-header {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .fv-chart-column .chart-header {
+    text-align: center;
+  }
+
+  .chart-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6b7280;
+    margin-bottom: 0.15rem;
+  }
+
+  .chart-balance {
+    font-size: 1.35rem;
+    font-family: Cambria, Georgia, serif;
+    font-weight: 700;
+    color: #1CA46C;
+  }
+
+  .chart-wrapper {
+    width: 750px;
+    height: 750px;
+    margin-top: 0 auto;
+    flex: 1;
+    display: flex;
+  }
+
+
+  .chart-area {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 360px;
+    height: 100%;
+  }
+
+  .chart-area canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  /* About */
+
+  .about h2 { margin-top: 0; }
+
+  .about p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 1.6rem;
+  }
+
+  @media (max-width: 900px) {
     .fv-main-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
-      gap: 1.75rem;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr);
     }
-
-
-.fv-inputs-column,
-.fv-chart-column {
-  display: flex;
-  flex-direction: column;
-}
-
-    .fv-results-card { margin-top: 1rem; }
-
-    .fv-inputs-column h2,
-    .fv-chart-column h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
+    .about-container {
+      flex-direction: column;
+      align-items: flex-start;
     }
-
-    .tagline {
-      font-size: 0.9rem;
-      color: #6b7280;
-      margin: 0 0 0.6rem;
-    }
-
-    label {
-      display: block;
-      margin-top: 0.75rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    input, select {
+    .about-photo {
+      margin-top: 1.5rem;
+      max-width: 100%;
       width: 100%;
-      margin-top: 0.25rem;
-      padding: 0.55rem 0.65rem;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      font-size: 0.95rem;
-      font-family: inherit;
-      outline: none;
-      background: #ffffff;
-      transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
     }
+  }
 
-    input:focus, select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 1px rgba(37,99,235,0.15);
-      background: #ffffff;
-    }
-
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type=number] { -moz-appearance: textfield; }
-
-    .results p {
-      margin: 0.2rem 0;
-      font-size: 0.93rem;
-    }
-
-    .results strong { font-weight: 600; }
-
-    .muted {
-      color: #6b7280;
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-    }
-
-    /* Chart container */
-
-    .chart-header {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-}
-
-.chart-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #6b7280;
-  margin-bottom: 0.15rem;
-}
-
-.chart-balance {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #1CA46C; /* same green family as your line */
-}
-
-
-.chart-wrapper {
-  margin-top: 0.5rem;
-  flex: 1;              /* let the wrapper grow to fill column */
-  display: flex;        /* so chart-area can stretch */
-}
-
-.chart-area {
-  position: relative;
-  width: 100%;
-  flex: 1;              /* fill available height */
-  min-height: 260px;    /* keep a reasonable minimum */
-  height: 100%;
-}
-
-.chart-area canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-
-    /* About */
-
-    .about h2 { margin-top: 0; }
-
-    .about p {
-      margin: 0.4rem 0;
-      font-size: 0.95rem;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-size: 0.78rem;
-      font-weight: 600;
-      margin-top: 1.6rem;
-    }
-
-    @media (max-width: 900px) {
-      .fv-main-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .fv-content { margin-top: 60vh; }
-    }
-
-    @media (min-width: 900px) {
-      main { padding-inline: 2rem; }
-    }
+  @media (min-width: 900px) {
+    main { padding-inline: 2rem; }
+  }
   </style>
 </head>
 <body>
-  <!-- HERO OVERLAY (FV only) -->
-  <section class="hero hero-animated" id="hero">
-    <div class="hero-inner" id="hero-inner">
-      <h1 class="hero-title">Investing made easy.</h1>
-      <p class="hero-subtitle">Designed by Hadi Farmawi</p>
-    </div>
-  </section>
-
-  <!-- Apple-style HEADER + TABS -->
+  <!-- HEADER + TABS -->
   <header class="app-header">
     <div class="header-divider"></div>
     <nav class="tabs-bar">
       <button class="tab active" data-target="page-fv">Home</button>
-      <button class="tab" data-target="page-pmt">PMT</button>
+      <button class="tab" data-target="page-baii">BA II Plus</button>
       <button class="tab" data-target="page-about">About</button>
     </nav>
   </header>
 
   <main>
-    <!-- FUTURE VALUE PAGE -->
+    <!-- HOME / FV PAGE -->
     <section id="page-fv" class="page active">
       <div id="fv-content" class="fv-content">
         <!-- Main card: Inputs + Chart -->
@@ -400,16 +354,16 @@
           <div class="fv-main-grid">
             <!-- Left: Inputs -->
             <div class="fv-inputs-column">
-              <h2>Inputs</h2>
-              
+              <h2></h2>
+
               <label>
                 Initial investment (PV)
-                <input type="number" id="pv" value="5000" min="0" step="0.01">
+                <input type="text" id="pv" value="5000">
               </label>
 
               <label>
                 Monthly contribution (PMT)
-                <input type="number" id="pmt" value="500" min="0" step="0.01">
+                <input type="text" id="pmt" value="500">
               </label>
 
               <label>
@@ -431,29 +385,29 @@
             <!-- Right: Chart -->
             <div class="fv-chart-column">
               <div class="chart-header">
-  <div class="chart-label">Your ending balance</div>
-  <div class="chart-balance" id="chart-balance">$0.00</div>
-</div>
+                <div class="chart-label">Your ending balance</div>
+                <div class="chart-balance" id="chart-balance">$0.00</div>
+              </div>
 
-<div class="chart-wrapper">
-  <div class="chart-area">
-    <canvas id="growthChart"></canvas>
-  </div>
-</div>
+              <div class="chart-wrapper">
+                <div class="chart-area">
+                  <canvas id="growthChart"></canvas>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Bottom: Results card -->
-        <div class="card fv-results-card">
+        <!-- Bottom: Results -->
+        <div class="fv-results-card">
           <h2>Results</h2>
           <div class="results">
-            <p><strong>Future value (nominal):</strong> <span id="fv-total">$0.00</span></p>
-            <p><strong>Total contributions:</strong> <span id="fv-contrib">$0.00</span></p>
-            <p><strong>Total interest (nominal):</strong> <span id="fv-interest">$0.00</span></p>
+            <p><strong>Total Principal:</strong> <span id="fv-contrib">$0.00</span></p>
+            <p><strong>Future Value (nominal):</strong> <span id="fv-total">$0.00</span></p>
+            <p><strong>Total Interest (nominal):</strong> <span id="fv-interest">$0.00</span></p>
             <p><strong>Inflation-adjusted value:</strong> <span id="fv-real">$0.00</span></p>
             <p class="muted">
-              Uses monthly compounding. Contributions are treated as an annuity due
+              Note: Unlike BA II Plus, this formula uses monthly instead of annual compounding. Contributions are treated as an annuity due
               (deposited at the beginning of each month).
             </p>
           </div>
@@ -461,92 +415,106 @@
       </div>
     </section>
 
-    <!-- PMT PAGE -->
-    <section id="page-pmt" class="page">
+    <!-- BA II PLUS PAGE -->
+    <section id="page-baii" class="page">
       <div class="card">
-        <h2>Goal Seek — Required Monthly Contribution</h2>
-        <p class="tagline">Solve for PMT (monthly contribution) given your target future value.</p>
+        <h2>BA II Plus — TVM Solver</h2>
+        <p class="tagline">
+          Annual compounding with annual end-of-year payments (ordinary annuity).
+          Equivalent to BA II Plus with P/Y = 1, C/Y = 1, END mode.
+        </p>
 
         <label>
-          Initial investment (PV)
-          <input type="number" id="goal-pv" value="5000" min="0" step="0.01">
+          Solve for
+          <select id="baii-solve-for">
+            <option value="fv">FV (future value)</option>
+            <option value="pv">PV (present value)</option>
+            <option value="pmt">PMT (payment)</option>
+            <option value="n">N (number of periods)</option>
+            <option value="iy">I/Y (interest rate)</option>
+          </select>
         </label>
 
         <label>
-          Target future value (nominal)
-          <input type="number" id="goal-fv" value="1000000" min="0" step="0.01">
+          N (years)
+          <input type="number" id="baii-n" value="30" step="0.01" min="0">
         </label>
 
         <label>
-          Annual return (nominal %)
-          <input type="number" id="goal-rate" value="10.33" step="0.01">
+          I/Y (annual %)
+          <input type="number" id="baii-iy" value="8" step="0.01">
         </label>
 
         <label>
-          Years to invest
-          <input type="number" id="goal-years" value="30" min="1" step="1">
+          PV
+          <input type="text" id="baii-pv" value="0">
+        </label>
+
+        <label>
+          PMT (annual)
+          <input type="text" id="baii-pmt" value="5000">
+        </label>
+
+        <label>
+          FV
+          <input type="text" id="baii-fv" value="1000000">
         </label>
       </div>
 
       <div class="card">
-        <h2>PMT Result</h2>
+        <h2>Result</h2>
         <div class="results">
-          <p><strong>Required monthly contribution:</strong> <span id="goal-pmt-result">$0.00</span></p>
+          <p><strong>Solved for:</strong> <span id="baii-solved-name">FV</span></p>
+          <p><strong>Value:</strong> <span id="baii-result-value">$0.00</span></p>
           <p class="muted">
-            Uses the same monthly compounding and annuity-due logic as your main calculator.
-            This is similar to solving for PMT on a BA II Plus in TVM mode.
+            Uses textbook TVM formulas for annual compounding and annual payments. 
+            Result should match BA II Plus for the same inputs and sign convention.
           </p>
         </div>
       </div>
     </section>
 
     <!-- ABOUT PAGE -->
-<section id="page-about" class="page">
-  <div class="about-container">
+    <section id="page-about" class="page">
+      <div class="about-container">
+        <div class="about-text">
+          <h2>Hadi Farmawi</h2>
 
-    <div class="about-text">
-      <h2>Hadi Farmawi</h2>
+          <p>
+            Hadi Farmawi is a junior accountancy student at Arizona State University. 
+            He is building his professional brand in corporate accounting with a strong focus on finance.
+          </p>
 
-      <p>
-        Hadi Farmawi is a junior accountancy student at Arizona State University. 
-        He is building his professional brand in corporate accounting with a strong focus on finance.
-      </p>
+          <p>
+            Hadi's interest in business began in high school when he completed Business 
+            Management and Intro to Entrepreneurship. Before attending ASU, he earned an 
+            Associate’s Degree in General Business at Mesa Community College (2024). 
+            Between 2023 and 2024, he served as an office member for Arizona Cultural Academy where he 
+            handled tuition receivables, basic journal entries, and T-accounts.
+          </p>
 
-      <p>
-        Hadi's interest in business began in high school when he completed Business 
-        Management and Intro to Entrepreneurship. Before attending ASU, he earned an 
-        Associate’s Degree in General Business at Mesa Community College (2024). 
-        Between 2023 and 2024, he served as an office member for Arizona Cultural Academy where he 
-        handled tuition receivables, basic journal entries, and T-accounts.
-      </p>
+          <p>
+            Hadi's passion for finance and accounting is evident in his projects. He is currently managing 
+            a $125K portfolio for a close relative and applying his studies to manage risk and return. 
+            He is also redesigning a compound–interest calculator incorporating goal–seek analysis and the 
+            Fisher equation. To accomplish these projects, Hadi relies on independent research and applies 
+            concepts and frameworks from External Reporting I, Data Analytics, and Fundamentals of Finance.
+          </p>
 
-      <p>
-        Hadi's passion for finance and accounting is evident in his projects. He is currently managing 
-        a $125K portfolio for a close relative and applying his studies to manage risk and return. 
-        He is also redesigning a compound–interest calculator incorporating goal–seek analysis and the 
-        Fisher equation. To accomplish these projects, Hadi relies on independent research and applies 
-        concepts and frameworks from External Reporting I, Data Analytics, and Fundamentals of Finance.
-      </p>
+          <p>
+            At ASU, Hadi completed a major research group project in ACC 340, where he contributed 
+            to researching Deckers Brands’ economic moat, key risks, management, and profitability metrics (ROIC/ROA). 
+            Outside of his curriculum, Hadi enjoys cooking, video editing, and exercising—interests that 
+            strengthen discipline, attention to detail, and storytelling that he also brings to his financial work.
+          </p>
 
-      <p>
-        At ASU, Hadi completed a major research group project in ACC 340, where he contributed 
-        to researching Deckers Brands’ economic moat, key risks, management, and profitability metrics (ROIC/ROA). 
-        Outside of his curriculum, Hadi enjoys cooking, video editing, and exercising—interests that 
-        strengthen discipline, attention to detail, and storytelling that he also brings to his financial work.
-      </p>
+          <p>
+            After graduation, Hadi plans to begin a career in corporate accounting, with a long-term 
+            interest in investment banking.
+          </p>
+        </div>
 
-      <p>
-        After graduation, Hadi plans to obtain his CPA liscnese and begin a career in public and corporate accounting, 
-        and an interest in investment banking.
-      </p>
-    </div>
-
-    <img src="hadi.jpg" class="about-photo" alt="Hadi Farmawi">
-
-  </div>
-</section>
-
-
+        <img src="hadi.jpg" class="about-photo" alt="Hadi Farmawi">
       </div>
     </section>
   </main>
@@ -555,357 +523,433 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    // Make charts crisp on high-DPI displays
-    if (typeof Chart !== "undefined") {
-      Chart.defaults.devicePixelRatio = window.devicePixelRatio || 1;
-    }
-
-    function formatCurrency(value) {
-      return value.toLocaleString(undefined, {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2
-      });
-    }
-
-    // Core Excel-like calculation
-    function computeExcelLike(PV, PMT, annualRate, inflationRate, years) {
-      const i = annualRate;
-      const inf = inflationRate;
-      const nYears = years;
-      const nMonths = nYears * 12;
-      const r = i / 12;
-
-      const iReal = (1 + i) / (1 + inf) - 1;
-      const rReal = iReal / 12;
-
-      const fvLumpNom = PV * Math.pow(1 + r, nMonths);
-      let fvAnnuityNom = 0;
-      if (r !== 0) {
-        fvAnnuityNom = PMT * ((Math.pow(1 + r, nMonths) - 1) / r) * (1 + r);
-      } else {
-        fvAnnuityNom = PMT * nMonths;
-      }
-
-      const totalBalanceNom = fvLumpNom + fvAnnuityNom;
-      const totalPrincipalNom = PV + PMT * nMonths;
-      const totalInterestNom = totalBalanceNom - totalPrincipalNom;
-
-      const fvLumpReal = PV * Math.pow(1 + rReal, nMonths);
-      let fvAnnuityReal = 0;
-      if (rReal !== 0) {
-        fvAnnuityReal = PMT * ((Math.pow(1 + rReal, nMonths) - 1) / rReal) * (1 + rReal);
-      } else {
-        fvAnnuityReal = PMT * nMonths;
-      }
-
-      const totalBalanceReal = fvLumpReal + fvAnnuityReal;
-
-      let totalPrincipalReal = PV;
-      for (let k = 1; k <= nMonths; k++) {
-        totalPrincipalReal += PMT / Math.pow(1 + inf, k / 12);
-      }
-      const totalInterestReal = totalBalanceReal - totalPrincipalReal;
-
-      return {
-        totalBalanceNom,
-        totalPrincipalNom,
-        totalInterestNom,
-        totalBalanceReal,
-        totalPrincipalReal,
-        totalInterestReal
-      };
-    }
-
-    // FV controls
-    const pvInput = document.getElementById("pv");
-    const pmtInput = document.getElementById("pmt");
-    const rateInput = document.getElementById("rate");
-    const inflationInput = document.getElementById("inflation");
-    const yearsInput = document.getElementById("years");
-
-    const fvTotalEl = document.getElementById("fv-total");
-    const fvContribEl = document.getElementById("fv-contrib");
-    const fvInterestEl = document.getElementById("fv-interest");
-    const fvRealEl = document.getElementById("fv-real");
-
-    let growthChart = null;
-    let chartLabels = [];
-    const baseYear = new Date().getFullYear();
-
-    function recalcFV() {
-      const PV = parseFloat(pvInput.value) || 0;
-      const PMT = parseFloat(pmtInput.value) || 0;
-      const rate = (parseFloat(rateInput.value) || 0) / 100;
-      const inflation = (parseFloat(inflationInput.value) || 0) / 100;
-      const years = Math.max(parseFloat(yearsInput.value) || 0, 0);
-
-      const res = computeExcelLike(PV, PMT, rate, inflation, years);
-
-      fvTotalEl.textContent = formatCurrency(res.totalBalanceNom);
-      fvContribEl.textContent = formatCurrency(res.totalPrincipalNom);
-      fvInterestEl.textContent = formatCurrency(res.totalInterestNom);
-      fvRealEl.textContent = formatCurrency(res.totalBalanceReal);
-const chartBalanceEl = document.getElementById("chart-balance");
-if (chartBalanceEl) {
-  chartBalanceEl.textContent = formatCurrency(res.totalBalanceReal);
-}
-
-
-      chartLabels = [];
-      const nominalSeries = [];
-      const realSeries = [];
-
-      for (let y = 0; y <= years; y++) {
-        const lblYear = baseYear + y;
-        chartLabels.push(lblYear.toString());
-        const sub = computeExcelLike(PV, PMT, rate, inflation, y);
-        nominalSeries.push(sub.totalBalanceNom);
-        realSeries.push(sub.totalBalanceReal);
-      }
-
-      const ctx = document.getElementById("growthChart").getContext("2d");
-
-      if (growthChart) {
-        growthChart.data.labels = chartLabels;
-        growthChart.data.datasets[0].data = nominalSeries;
-        growthChart.data.datasets[1].data = realSeries;
-        growthChart.update();
-      } else {
-        growthChart = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: chartLabels,
-datasets: [
-  {
-    label: "Nominal value",
-    data: nominalSeries,
-    borderColor: "#1E6BD6",            // BLUE (solid)
-    backgroundColor: "rgba(30,107,214,0.20)",  // light blue fill for hover
-    borderWidth: 2,
-    tension: 0.25,
-    pointRadius: 0,
-    pointHoverRadius: 4,
-    pointStyle: "rect",               // 🔷 solid square
-    fill: false
-  },
-  {
-    label: "Inflation-adjusted value",
-    data: realSeries,
-    borderColor: "#1CA46C",             // GREEN (solid)
-    backgroundColor: "rgba(28,164,108,0.20)",  // light green fill for hover
-    borderWidth: 2,
-    tension: 0.25,
-    pointRadius: 0,
-    pointHoverRadius: 4,
-    pointStyle: "rect",                // 🟩 solid square
-    fill: false
+  // Make charts extra-crisp on zoom / high-DPI
+  if (typeof Chart !== "undefined") {
+    Chart.defaults.devicePixelRatio = Math.min(window.devicePixelRatio * 2, 3);
   }
-]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: "index", intersect: false },
-            plugins: {
-              legend: {
-                position: "bottom",
-                labels: {
-                  usePointStyle: true
-                }
-              },
-              tooltip: {
-                callbacks: {
-                  title: function (items) {
-                    if (!items.length) return "";
-                    const idx = items[0].dataIndex;
-                    const year = chartLabels[idx];
-                    return "Year " + year;
-                  },
-                  label: function (context) {
-                    const v = context.parsed.y || 0;
-                    return `${context.dataset.label}: ${formatCurrency(v)}`;
-                  }
-                }
+
+  function formatCurrency(value) {
+    return value.toLocaleString(undefined, {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 2
+    });
+  }
+
+  // Currency helpers
+  function parseCurrencyString(value) {
+    if (typeof value !== "string") value = String(value ?? "");
+    const cleaned = value.replace(/[^0-9.-]/g, "");
+    const num = parseFloat(cleaned);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function formatCurrencyInput(num) {
+    return "$" + num.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+  }
+
+  function setupCurrencyInput(input, onChange) {
+    if (!input) return;
+
+    const initial = parseCurrencyString(input.value);
+    if (initial) {
+      input.value = formatCurrencyInput(initial);
+    }
+
+    input.addEventListener("focus", () => {
+      const numeric = parseCurrencyString(input.value);
+      input.value = numeric ? numeric.toString() : "";
+    });
+
+    input.addEventListener("blur", () => {
+      const numeric = parseCurrencyString(input.value);
+      input.value = numeric ? formatCurrencyInput(numeric) : "";
+      if (typeof onChange === "function") onChange();
+    });
+  }
+
+  // ---- HOME / FV calculator: monthly compounding, annuity-due ----
+
+  function computeExcelLike(PV, PMT, annualRate, inflationRate, years) {
+    const i = annualRate;
+    const inf = inflationRate;
+    const nYears = years;
+    const nMonths = nYears * 12;
+    const r = i / 12;
+
+    const iReal = (1 + i) / (1 + inf) - 1;
+    const rReal = iReal / 12;
+
+    const fvLumpNom = PV * Math.pow(1 + r, nMonths);
+
+    let fvAnnuityNom = 0;
+    if (r !== 0) {
+      fvAnnuityNom = PMT * ((Math.pow(1 + r, nMonths) - 1) / r) * (1 + r);
+    } else {
+      fvAnnuityNom = PMT * nMonths;
+    }
+
+    const totalBalanceNom = fvLumpNom + fvAnnuityNom;
+    const totalPrincipalNom = PV + PMT * nMonths;
+    const totalInterestNom = totalBalanceNom - totalPrincipalNom;
+
+    const fvLumpReal = PV * Math.pow(1 + rReal, nMonths);
+    let fvAnnuityReal = 0;
+    if (rReal !== 0) {
+      fvAnnuityReal = PMT * ((Math.pow(1 + rReal, nMonths) - 1) / rReal) * (1 + rReal);
+    } else {
+      fvAnnuityReal = PMT * nMonths;
+    }
+
+    const totalBalanceReal = fvLumpReal + fvAnnuityReal;
+
+    let totalPrincipalReal = PV;
+    for (let k = 1; k <= nMonths; k++) {
+      totalPrincipalReal += PMT / Math.pow(1 + inf, k / 12);
+    }
+    const totalInterestReal = totalBalanceReal - totalPrincipalReal;
+
+    return {
+      totalBalanceNom,
+      totalPrincipalNom,
+      totalInterestNom,
+      totalBalanceReal,
+      totalPrincipalReal,
+      totalInterestReal
+    };
+  }
+
+  const pvInput = document.getElementById("pv");
+  const pmtInput = document.getElementById("pmt");
+  const rateInput = document.getElementById("rate");
+  const inflationInput = document.getElementById("inflation");
+  const yearsInput = document.getElementById("years");
+
+  const fvTotalEl = document.getElementById("fv-total");
+  const fvContribEl = document.getElementById("fv-contrib");
+  const fvInterestEl = document.getElementById("fv-interest");
+  const fvRealEl = document.getElementById("fv-real");
+
+  let growthChart = null;
+  let chartLabels = [];
+  const baseYear = new Date().getFullYear();
+
+  function recalcFV() {
+    const PV = parseCurrencyString(pvInput.value);
+    const PMT = parseCurrencyString(pmtInput.value);
+    const rate = (parseFloat(rateInput.value) || 0) / 100;
+    const inflation = (parseFloat(inflationInput.value) || 0) / 100;
+    const years = Math.max(parseFloat(yearsInput.value) || 0, 0);
+
+    const res = computeExcelLike(PV, PMT, rate, inflation, years);
+
+    fvTotalEl.textContent = formatCurrency(res.totalBalanceNom);
+    fvContribEl.textContent = formatCurrency(res.totalPrincipalNom);
+    fvInterestEl.textContent = formatCurrency(res.totalInterestNom);
+    fvRealEl.textContent = formatCurrency(res.totalBalanceReal);
+
+    const chartBalanceEl = document.getElementById("chart-balance");
+    if (chartBalanceEl) {
+      chartBalanceEl.textContent = formatCurrency(res.totalBalanceReal);
+    }
+
+    chartLabels = [];
+    const nominalSeries = [];
+    const realSeries = [];
+    const principalSeries = [];
+
+    for (let y = 0; y <= years; y++) {
+      const lblYear = baseYear + y;
+      chartLabels.push(lblYear.toString());
+      const sub = computeExcelLike(PV, PMT, rate, inflation, y);
+      nominalSeries.push(sub.totalBalanceNom);
+      realSeries.push(sub.totalBalanceReal);
+      principalSeries.push(sub.totalPrincipalNom);
+    }
+
+    const ctx = document.getElementById("growthChart").getContext("2d");
+
+    if (growthChart) {
+      growthChart.data.labels = chartLabels;
+      growthChart.data.datasets[0].data = nominalSeries;
+      growthChart.data.datasets[1].data = realSeries;
+      growthChart.data.datasets[2].data = principalSeries;
+      growthChart.update();
+    } else {
+      growthChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: "Nominal value",
+              data: nominalSeries,
+              borderColor: "#1E6BD6",
+              backgroundColor: "rgba(30,107,214,0.16)",
+              borderWidth: 2,
+              tension: 0.25,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: "#1E6BD6",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 2,
+              pointStyle: "circle",
+              fill: true
+            },
+            {
+              label: "Inflation-adjusted value",
+              data: realSeries,
+              borderColor: "#1CA46C",
+              backgroundColor: "rgba(28,164,108,0.16)",
+              borderWidth: 2,
+              tension: 0.25,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: "#1CA46C",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 2,
+              pointStyle: "circle",
+              fill: true
+            },
+            {
+              label: "Total principal",
+              data: principalSeries,
+              borderColor: "#6B7280",
+              backgroundColor: "rgba(107,114,128,0.18)",
+              borderWidth: 2,
+              tension: 0,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: "#6B7280",
+              pointHoverBorderColor: "#ffffff",
+              pointHoverBorderWidth: 2,
+              pointStyle: "circle",
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          interaction: { mode: "index", intersect: false },
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                usePointStyle: true,
+                pointStyle: "circle",
+                boxWidth: 32,
+                boxHeight: 4,
+                padding: 16
               }
             },
-            scales: {
-              x: {
-                title: { display: true, text: "Year" },
-                grid: {
-                  display: false,
-                  drawBorder: false
-                },
-                ticks: {
-                  autoSkip: true,
-                  maxTicksLimit: 6
+            tooltip: {
+              backgroundColor: "rgba(255, 255, 255, 1)",
+              titleColor: "#000",
+              bodyColor: "#000",
+              borderColor: "#ddd",
+              borderWidth: 1,
+              displayColors: true,
+              padding: 12,
+              cornerRadius: 0
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: "Year" },
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 6
+              }
+            },
+            y: {
+              ticks: {
+                callback: function(value) {
+                  return "$" + (value / 1000).toFixed(0) + "k";
                 }
               },
-              y: {
-                title: { display: false },   // no label
-                ticks: {
-                  callback: function (value) {
-                    return "$" + value.toLocaleString();
-                  }
-                },
-                grid: {
-                  color: "rgba(209,213,219,0.8)",
-                  drawBorder: false
-                }
+              grid: {
+                color: "rgba(0,0,0,0.04)",
+                drawBorder: false
               }
             }
           }
-        });
-      }
+        }
+      });
     }
+  }
 
-    [pvInput, pmtInput, rateInput, inflationInput, yearsInput].forEach(el => {
-      el.addEventListener("input", recalcFV);
-      el.addEventListener("change", recalcFV);
-    });
+  // ---- BA II Plus TVM Solver (annual compounding, ordinary annuity) ----
 
-    // PMT goal-seek
-    const goalPvInput = document.getElementById("goal-pv");
-    const goalFvInput = document.getElementById("goal-fv");
-    const goalRateInput = document.getElementById("goal-rate");
-    const goalYearsInput = document.getElementById("goal-years");
-    const goalPmtResultEl = document.getElementById("goal-pmt-result");
+  const baiiSolveFor = document.getElementById("baii-solve-for");
+  const baiiNInput   = document.getElementById("baii-n");
+  const baiiIyInput  = document.getElementById("baii-iy");
+  const baiiPvInput  = document.getElementById("baii-pv");
+  const baiiPmtInput = document.getElementById("baii-pmt");
+  const baiiFvInput  = document.getElementById("baii-fv");
 
-    function solveForPMT() {
-      const PV = parseFloat(goalPvInput.value) || 0;
-      const FV = parseFloat(goalFvInput.value) || 0;
-      const years = parseFloat(goalYearsInput.value) || 0;
-      const annualRate = (parseFloat(goalRateInput.value) || 0) / 100;
+  const baiiSolvedNameEl  = document.getElementById("baii-solved-name");
+  const baiiResultValueEl = document.getElementById("baii-result-value");
 
-      const r = annualRate / 12;
-      const N = years * 12;
+  function tvmFV(PV, PMT, r, N) {
+    if (N <= 0) return PV;
+    if (r === 0) return PV + PMT * N;
+    const A = Math.pow(1 + r, N);
+    return PV * A + PMT * ((A - 1) / r);
+  }
 
-      if (N <= 0) {
-        goalPmtResultEl.textContent = "$0.00";
-        return;
-      }
+  function recalcBAII() {
+    const solveFor = baiiSolveFor.value;
 
+    let N  = parseFloat(baiiNInput.value) || 0;
+    let I  = parseFloat(baiiIyInput.value) || 0;
+    let r  = I / 100;
+    let PV = parseCurrencyString(baiiPvInput.value);
+    let PMT= parseCurrencyString(baiiPmtInput.value);
+    let FV = parseCurrencyString(baiiFvInput.value);
+
+    let resultValue = null;
+    let solvedName  = "";
+
+    if (solveFor === "fv") {
       if (r === 0) {
-        const pmt = (FV - PV) / N;
-        goalPmtResultEl.textContent = formatCurrency(pmt);
-        return;
+        FV = PV + PMT * N;
+      } else {
+        const A = Math.pow(1 + r, N);
+        FV = PV * A + PMT * ((A - 1) / r);
       }
-
-      const A = Math.pow(1 + r, N);
-      const numerator = FV - PV * A;
-      const denom = ((A - 1) / r) * (1 + r);
-      const PMT = numerator / denom;
-      goalPmtResultEl.textContent = formatCurrency(PMT);
-    }
-
-    [goalPvInput, goalFvInput, goalRateInput, goalYearsInput].forEach(el => {
-      el.addEventListener("input", solveForPMT);
-      el.addEventListener("change", solveForPMT);
-    });
-
-    // Tabs + hero scroll logic
-    const tabs = document.querySelectorAll(".tab");
-    const pages = document.querySelectorAll(".page");
-    const heroSection = document.getElementById("hero");
-    const heroInner = document.getElementById("hero-inner");
-    const fvContent = document.getElementById("fv-content");
-    let heroHasPlayedOnce = false;
-
-    // Prevent browser from restoring old scroll position
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-
-    function resetHeroAndFVForTop() {
-      heroInner.style.opacity = 1;
-      heroInner.style.transform = "translateY(0)";
-      fvContent.style.opacity = 0;
-      fvContent.style.transform = "translateY(24px)";
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }
-
-    function showPage(targetId) {
-      pages.forEach(p => {
-        const isTarget = p.id === targetId;
-        p.classList.toggle("active", isTarget);
-      });
-
-      tabs.forEach(t => {
-        t.classList.toggle("active", t.dataset.target === targetId);
-      });
-
-      const isFV = targetId === "page-fv";
-
-      if (isFV) {
-        heroSection.classList.remove("hidden");
-        if (!heroHasPlayedOnce) {
-          heroSection.classList.add("hero-animated");
+      baiiFvInput.value = formatCurrencyInput(FV);
+      resultValue = formatCurrency(FV);
+      solvedName = "FV (future value)";
+    } else if (solveFor === "pv") {
+      if (r === 0) {
+        PV = FV - PMT * N;
+      } else {
+        const A = Math.pow(1 + r, N);
+        PV = (FV - PMT * ((A - 1) / r)) / A;
+      }
+      baiiPvInput.value = formatCurrencyInput(PV);
+      resultValue = formatCurrency(PV);
+      solvedName = "PV (present value)";
+    } else if (solveFor === "pmt") {
+      if (N === 0) {
+        PMT = 0;
+      } else if (r === 0) {
+        PMT = (FV - PV) / N;
+      } else {
+        const A = Math.pow(1 + r, N);
+        PMT = (FV - PV * A) * r / (A - 1);
+      }
+      baiiPmtInput.value = formatCurrencyInput(PMT);
+      resultValue = formatCurrency(PMT);
+      solvedName = "PMT (payment)";
+    } else if (solveFor === "n") {
+      if (r === 0) {
+        if (PMT !== 0) {
+          N = (FV - PV) / PMT;
         } else {
-          heroSection.classList.remove("hero-animated");
+          N = 0;
         }
-        resetHeroAndFVForTop();
-        recalcFV();
       } else {
-        heroSection.classList.add("hidden");
-        if (targetId === "page-pmt") {
-          solveForPMT();
+        const num = FV * r + PMT;
+        const den = PV * r + PMT;
+        if (num > 0 && den > 0 && num !== den) {
+          N = Math.log(num / den) / Math.log(1 + r);
+        } else {
+          N = 0;
         }
-        window.scrollTo({ top: 0, behavior: "auto" });
       }
+      baiiNInput.value = N.toFixed(4);
+      resultValue = N.toFixed(4) + " periods";
+      solvedName = "N (number of periods)";
+    } else if (solveFor === "iy") {
+      // Solve for r numerically between 0% and 100%
+      const maxIter = 50;
+      let rate = 0.05; // initial guess 5%
+      function f(rr) {
+        return tvmFV(PV, PMT, rr, N) - FV;
+      }
+      for (let iter = 0; iter < maxIter; iter++) {
+        const eps = 1e-5;
+        const f1 = f(rate + eps);
+        const f0 = f(rate - eps);
+        const df = (f1 - f0) / (2 * eps);
+        const fr = f(rate);
+        if (!isFinite(df) || Math.abs(df) < 1e-12) break;
+        const newRate = rate - fr / df;
+        if (!isFinite(newRate) || newRate <= -0.9999 || newRate > 10) break;
+        if (Math.abs(newRate - rate) < 1e-10) {
+          rate = newRate;
+          break;
+        }
+        rate = newRate;
+      }
+      if (!isFinite(rate) || rate < -0.9999) rate = 0;
+      I = rate * 100;
+      baiiIyInput.value = I.toFixed(4);
+      resultValue = I.toFixed(4) + " %";
+      solvedName = "I/Y (interest rate)";
     }
 
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        const targetId = tab.getAttribute("data-target");
-        if (!targetId) return;
-        showPage(targetId);
+    baiiSolvedNameEl.textContent = solvedName;
+    baiiResultValueEl.textContent = resultValue || "";
+  }
+
+  // Setup currency inputs
+  setupCurrencyInput(pvInput, recalcFV);
+  setupCurrencyInput(pmtInput, recalcFV);
+
+  setupCurrencyInput(baiiPvInput, recalcBAII);
+  setupCurrencyInput(baiiPmtInput, recalcBAII);
+  setupCurrencyInput(baiiFvInput, recalcBAII);
+
+  // Wire up inputs
+  [rateInput, inflationInput, yearsInput].forEach(el => {
+    el.addEventListener("input", recalcFV);
+  });
+
+  [baiiSolveFor, baiiNInput, baiiIyInput].forEach(el => {
+    el.addEventListener("input", recalcBAII);
+  });
+
+  // Tabs
+  const tabs = document.querySelectorAll(".tab");
+  const pages = document.querySelectorAll(".page");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      const targetId = tab.getAttribute("data-target");
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      pages.forEach(page => {
+        if (page.id === targetId) {
+          page.classList.add("active");
+        } else {
+          page.classList.remove("active");
+        }
       });
-    });
 
-    // Intersection-based hero/fv fade
-    window.addEventListener("scroll", () => {
-      if (heroSection.classList.contains("hidden")) return;
-
-      const rect = fvContent.getBoundingClientRect();
-      const fvTop = rect.top;
-      const viewportHeight = window.innerHeight;
-      const heroCenter = viewportHeight / 2;
-
-      const start = viewportHeight;  // fvTop at bottom -> progress 0
-      const end = heroCenter;        // fvTop at hero center -> progress 1
-
-      let progress;
-      if (window.scrollY === 0) {
-        // Hard reset at top: hero fully visible, FV hidden
-        progress = 0;
-      } else if (fvTop >= start) {
-        progress = 0;
-      } else if (fvTop <= end) {
-        progress = 1;
-      } else {
-        progress = (start - fvTop) / (start - end);
+      if (targetId === "page-fv") {
+        recalcFV();
+      } else if (targetId === "page-baii") {
+        recalcBAII();
       }
 
-      progress = Math.max(0, Math.min(progress, 1));
-
-      heroInner.style.opacity = 1 - progress;
-      heroInner.style.transform = `translateY(${progress * -20}px)`;
-
-      fvContent.style.opacity = progress;
-      fvContent.style.transform = `translateY(${(1 - progress) * 24}px)`;
-
-      if (!heroHasPlayedOnce && progress >= 1) {
-        heroHasPlayedOnce = true;
-        heroSection.classList.remove("hero-animated");
-      }
+      window.scrollTo({ top: 0, behavior: "auto" });
     });
+  });
 
-    // Initial load: force to top and set hero/FV states
-    window.addEventListener("load", () => {
-      resetHeroAndFVForTop();
-      recalcFV();
-      solveForPMT();
-    });
+  // Initial calculations
+  recalcFV();
+  recalcBAII();
   </script>
 </body>
 </html>
